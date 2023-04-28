@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+#include "main.h"
 
 /**
  * _printf - prints
@@ -17,7 +18,7 @@ int _printf(const char *format, ...)
 {
 	va_list args;
 	const char *p;
-	int num, i, done = 0;
+	int num, i, c, done = 0;
 
 	va_start(args, format);
 
@@ -27,49 +28,25 @@ int _printf(const char *format, ...)
 		{
 			putchar(*p);
 			done++;
-		} else {
+		} else
+		{
 			p++;
 			switch (*p)
 			{
 				case 'c':
 					{
-						int c = va_arg(args, int);
+						c = va_arg(args, int);
 						putchar(c);
 						done++;
 						break;
 					}
-				case 'd':
-					{
-						int n = va_arg(args, int);
-						int temp = n;
-						int count = 0;
-						while (temp != 0) {
-							count++;
-							temp /= 10;
-						}
-						if (n < 0)
-						{
-							putchar('-');
-							done++;
-							count++;
-							n = -n;
-						}
-						for ( i = count - 1; i >= 0; i--)
-						{
-							int digit = n / pow(10, i);
-							n %= (int)pow(10, i);
-							putchar(digit + '0');
-							done++;
-						}
-						break;
+				case 'i':
+					num = va_arg(args, int);
+					i++;
+					printf("%i", num);
+					break;
 
-						case 'i':
-						num = va_arg(args, int);
-						i++;
-						printf("%i", num);
-						break;
 
-					}
 				case 's':
 					{
 						char *str = va_arg(args, char *);
@@ -89,6 +66,6 @@ int _printf(const char *format, ...)
 
 	va_end(args);
 
-	return done;
+	return (done);
 }
 
